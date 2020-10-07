@@ -43,7 +43,6 @@ int main(){
 //Assuming borders as 0
 //Assuming open routes  as 1
 //Assuming checked and unsutable routes as 5
-//Assuming checked and sutable route as 3
 //Assuming traget as 2
 //Assuming founded route as 7
 
@@ -78,7 +77,7 @@ void solveMaze(char **maze, const int HT, const int WD, /*Why is these needed: x
             }
         }
         else if(((maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '1' : '0')) || (maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '2' : '0'))) && !(arr_coordinates_hash[0][_j-2] == i + 1 && arr_coordinates_hash[1][_j-2] == j)){
-            arr_coordinates_hash[0][_j] = i + 1; // ++i
+            arr_coordinates_hash[0][_j] = i + 1;
             arr_coordinates_hash[1][_j] = j;
             _j++;
             i++;
@@ -154,7 +153,7 @@ void solveMaze(char **maze, const int HT, const int WD, /*Why is these needed: x
                         }
                     }
                     else if(((maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '1' : '0')) || (maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '5' : '0')) || (maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '6' : '0'))) && !(arr_coordinates_hash[0][_j-2] == i + 1 && arr_coordinates_hash[1][_j-2] == j)){
-                        arr_coordinates_hash[0][_j] = i + 1; // ++i
+                        arr_coordinates_hash[0][_j] = i + 1;
                         arr_coordinates_hash[1][_j] = j;
                         _j++;
                         i++;
@@ -254,7 +253,6 @@ void printMaze(char **maze, const int HT, const int WD){
 	//   printf("%c",maze[i][j]);
 	// printf("%c\n",maze[i][WD-1]);
     // }
-   // printf("%c", maze[0][1]);
 
     for (int i=0; i<HT ; i++){
 	for(int j=0; j<WD; j++)
