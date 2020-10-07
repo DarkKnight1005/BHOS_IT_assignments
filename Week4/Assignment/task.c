@@ -197,7 +197,7 @@ void solveMaze(char **maze, const int HT, const int WD, /*Why is these needed: x
         }
     }
     if(!triggered){
-    solveMaze(maze, HT, WD, 0, 0);
+        solveMaze(maze, HT, WD, 0, 0);
     }else{
         for(int m = 0; m < _j-1 ; m++){
             maze[arr_coordinates_hash[0][m]][arr_coordinates_hash[1][m]] = '7';
