@@ -45,7 +45,6 @@ int main(){
 //Assuming borders as 0
 //Assuming open routes  as 1
 //Assuming checked and unsutable routes as 5
-//Assuming divergent points as 6
 //Assuming target as 2
 //Assuming founded route as 7
 
@@ -66,7 +65,6 @@ void solveMaze(char **maze, const int HT, const int WD, /*Why is these needed: x
     int i = 0;
     int j = 0;
 
-
     while(!stucked && !triggered){
         if(maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '2' : '0')){
                 triggered = true;
@@ -80,6 +78,26 @@ void solveMaze(char **maze, const int HT, const int WD, /*Why is these needed: x
         if(maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '2' : '0')){
                 triggered = true;
         } 
+        if(((maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '1' : '0')) || (maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '5' : '0')))){
+            count ++;
+	    }
+	    if(((maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '1' : '0')) || (maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '5' : '0')))){
+	        count ++;
+	    }
+	    if(((maze[i][j - 1 >= 0 ? j - 1 : j] == (j - 1 >= 0 ? '1' : '0')) || (maze[i][j - 1 >= 0 ? j - 1 : j] == (j - 1 >= 0 ? '5' : '0')))){
+	        count ++;
+	    } 
+	    if(((maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '1' : '0')) || (maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '5' : '0')))){
+	        count ++;
+	    } 
+	    if(count >= 3){
+	        arr_coordinates_hash_div[0][_jj] = i;
+	        arr_coordinates_hash_div[1][_jj] = j;
+	        _jj++;
+	    }
+	    count = 0;
+	    
+	    
         if(((maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '1' : '0')) || (maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '2' : '0'))) && !(arr_coordinates_hash[0][_j-2 >= 0 ? _j-2 : 0] == i && arr_coordinates_hash[1][_j-2 >= 0 ? _j-2 : 0] == j + 1)){
             arr_coordinates_hash[0][_j] = i;
             arr_coordinates_hash[1][_j] = j + 1;
@@ -121,91 +139,18 @@ void solveMaze(char **maze, const int HT, const int WD, /*Why is these needed: x
             //stuck
             for(int m = 0; m < _j ; m++){
                 maze[arr_coordinates_hash[0][m]][arr_coordinates_hash[1][m]] = '5';
+                
             }
-            for(int m = 0; m < HT*WD ; m++){
-                for(int n = 0; n < 2; n++){
-                   arr_coordinates_hash[n][m] = NULL;
-                }
-            }
-            for(int i = 0; i < HT; i++){
-                for(int j = 0; j < WD; j++){
-                    if(((maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '1' : '0')) || (maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '5' : '0'))) && maze[i][j] == '5'){
-                        count ++;
-                    }
-                    if(((maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '1' : '0')) || (maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '5' : '0'))) && maze[i][j] == '5'){
-                        count ++;
-                    }
-                    if(((maze[i][j - 1 >= 0 ? j - 1 : j] == (j - 1 >= 0 ? '1' : '0')) || (maze[i][j - 1 >= 0 ? j - 1 : j] == (j - 1 >= 0 ? '5' : '0'))) && maze[i][j] == '5'){
-                        count ++;
-                    } 
-                    if(((maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '1' : '0')) || (maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '5' : '0'))) && maze[i][j] == '5'){
-                        count ++;
-                    } 
-                    if(count >= 3){
-                        arr_coordinates_hash_div[0][_jj] = i;
-                        arr_coordinates_hash_div[1][_jj] = j;
-                        _jj++;
-                    }
-                    count = 0;
-                }
-            } 
-            for(int m = 0; m < _jj; m++){
-                maze[arr_coordinates_hash_div[0][m]][arr_coordinates_hash_div[1][m]] = '6';
-            }
-            i = 0;
-            j = 0;
-            for(int m = 0; m < _jj; m++){
-               while(!div_founded){
-                if(((maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '1' : '0')) || (maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '5' : '0')) || (maze[i][j + 1 < WD ? j + 1 : j] == (j + 1 < WD ? '6' : '0'))) && !(arr_coordinates_hash[0][_j-2 >= 0 ? _j-2 : 0] == i && arr_coordinates_hash[1][_j-2 >= 0 ? _j-2 : 0] == j + 1)){
-                        arr_coordinates_hash[0][_j] = i;
-                        arr_coordinates_hash[1][_j] = j + 1;
-                        _j++;
-                        j++;
-                        if(maze[i][j] == '6'){
-                            div_founded = true;
-                        }
-                    }
-                    else if(((maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '1' : '0')) || (maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '5' : '0')) || (maze[i + 1 < HT ? i + 1 : i][j] == (i + 1 < HT ? '6' : '0'))) && !(arr_coordinates_hash[0][_j-2 >= 0 ? _j-2 : 0] == i + 1 && arr_coordinates_hash[1][_j-2 >= 0 ? _j-2 : 0] == j)){
-                        arr_coordinates_hash[0][_j] = i + 1;
-                        arr_coordinates_hash[1][_j] = j;
-                        _j++;
-                        i++;
-                        if(maze[i][j] == '6'){
-                            div_founded = true;
-                        }
-                    }
-                    else if(((maze[i][j - 1 >= 0 ? j - 1 : j] == (j - 1 >= 0 ? '1' : '0')) || (maze[i][j - 1 >= 0 ? j - 1 : j] == (j - 1 >= 0 ? '5' : '0')) || (maze[i][j - 1 >= 0 ? j - 1 : j] == (j - 1 >= 0 ? '6' : '0'))) && !(arr_coordinates_hash[0][_j-2 >= 0 ? _j-2 : 0] == i && arr_coordinates_hash[1][_j-2 >= 0 ? _j-2 : 0] == j - 1)){
-                        arr_coordinates_hash[0][_j] = i;
-                        arr_coordinates_hash[1][_j] = j - 1;
-                        _j++;
-                        j--;
-                        if(maze[i][j] == '6'){
-                            div_founded = true;
-                        }
-                    } 
-                    else if(((maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '1' : '0')) || (maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '5' : '0')) || (maze[i - 1 >= 0 ? i - 1 : i][j] == (i - 1 >= 0 ? '6' : '0'))) && !(arr_coordinates_hash[0][_j-2 >= 0 ? _j-2 : 0] == i - 1 && arr_coordinates_hash[1][_j-2 >= 0 ? _j-2 : 0] == j)){
-                        arr_coordinates_hash[0][_j] = i - 1;
-                        arr_coordinates_hash[1][_j] = j;
-                        _j++;
-                        i--;
-                        if(maze[i][j] == '6'){
-                            div_founded = true;
-                        }
-                    }  
-                }
-                for(int l = 0; l < _j ; l++){
-                maze[arr_coordinates_hash[0][l]][arr_coordinates_hash[1][l]] = '1';
-                }
-                for(int l = 0; l < HT*WD ; l++){
-                    for(int k = 0; k < 2; k++){
-                    arr_coordinates_hash[k][l] = NULL;
-                    }
-                }
-                i = 0;
-                j = 0;
-                div_founded = false;
-            }
-            
+            for(int m = 0; m < _j ; m++){
+            	if(!(arr_coordinates_hash[0][m] == arr_coordinates_hash_div[0][_jj - 1 >= 0 ? _jj-1 : 0] && arr_coordinates_hash[1][m] == arr_coordinates_hash_div[1][_jj - 1 >= 0 ? _jj-1 : 0])){
+
+            		maze[arr_coordinates_hash[0][m]][arr_coordinates_hash[1][m]] = '1';
+            	}else{
+                    
+            		maze[arr_coordinates_hash[0][m]][arr_coordinates_hash[1][m]] = '1';
+            		break;
+				}
+        }
             stucked = true;
         }
     }
