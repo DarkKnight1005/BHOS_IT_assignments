@@ -183,12 +183,11 @@ void solveMaze(char **maze, int *latest_path[], const int HT, const int WD, /*Wh
 
 bool isSteped(int *array[2], int size, int i, int j){
 	
-	for(int _k = 0; _k<size - 2 ; _k++){
+	for(int _k = 0; _k < size - 2; _k++){
 		if(array[0][_k] == i && array[1][_k] == j)
 		return true;
 	}
 	return false;
-	
 }
 
 void encode2Darr(char **maze, const int HT, const int WD){
