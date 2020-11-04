@@ -19,6 +19,13 @@ void print_list(Node_t *node) {
     }
 }
 
+void free_up(Node_t *node) {
+    while (node != NULL) {
+        free(node);
+        node = node->next;
+    }
+}
+
 void push(Node_t **head_ref, char *new_data) {
     Node_t *new_node = (Node_t *) malloc(sizeof(Node_t));
     //new_node->data = new_data;
@@ -81,6 +88,7 @@ int main() {
     bool quit = 0;
 
     strcpy(head->data, "Turgut");
+    head->next = NULL;
     append(&head, "Nazrin");
     append(&head, "Nigar");
     append(&head, "Kamran");
@@ -93,6 +101,7 @@ int main() {
     scanf("%s" , input);
     if (strcmp(input,"quit") == 0) {
         quit = 1;
+        free_up(head);
     }
     else if (strcmp(input,"admit") == 0) {
         deleteNode(&head, head->data);
