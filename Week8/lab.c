@@ -63,7 +63,7 @@ void deleteNode(Node_t **head_ref, char *key)
         temp = temp->next; 
     } 
     if (temp == NULL){ 
-        printf("There no such user \n");
+        printf("There is no such user \n");
         isErr = true;
         return; 
     }
