@@ -3,6 +3,9 @@
 #include<string.h>
 #include<stdbool.h>
 
+
+bool isErr = false;
+
 typedef struct Node {
 
     char data[256];
@@ -60,6 +63,8 @@ void deleteNode(Node_t **head_ref, char *key)
         temp = temp->next; 
     } 
     if (temp == NULL){ 
+        printf("There no such user \n");
+        isErr = true;
         return; 
     }
     prev->next = temp->next; 
@@ -94,7 +99,10 @@ int main() {
     }
     else{
         deleteNode(&head, input);
+        if(!isErr){
         append(&head, input);
+        }
+        isErr = false;
     }
 
     print_list(head);
