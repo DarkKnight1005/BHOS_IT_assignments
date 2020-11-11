@@ -4,9 +4,9 @@
 #include<stdbool.h>
 
 void handler(char *source, char *ints, char *nonints, int size){
-    int j = 0, k = 0, i = 0;
+    int j = 0, k = 0, i = 0, p = 0;
     for(i = 0; i < size; i++){
-        if(source[i] >= 48 && source[i] <= 57){
+        if(source[i] >= 48 && source[i] <= 57 && i != size - 1){
             ints[j] = source[i];
             j++;
         }else{
@@ -14,6 +14,7 @@ void handler(char *source, char *ints, char *nonints, int size){
             k++;
         }
     }
+    //printf("j: %d, p: %d", j, i);
 }
 
 int main() {
