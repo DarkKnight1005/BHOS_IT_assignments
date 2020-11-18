@@ -19,7 +19,7 @@ void handler(char *source, char *ints, char *nonints, int size){
 
 int main() {
 
-    char source[] = "hwbq87r3bffdvgh9g8!@y843fblwp8u4heno)(&^hufhh";
+    char source[] = "vbeyyg79w7 4uegavlvh!@#$^ie nvio5 49068fkdsl 9gy3459vaj";
     char ints[256];
     char nonints[256];
     handler(source, ints, nonints, sizeof(source)/sizeof(char));
