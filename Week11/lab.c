@@ -4,27 +4,29 @@
 
 //stin, stdout, stderr
 
-#define BUF_SIZE 12800
+#define BUF_SIZE 1280
 
 char *my_fgets(char *str, int size_num, FILE *_infile){
 
-    int count = 0;
-    char *_char;
-    //size_num--;
-    _char = str;
-    char buf[BUF_SIZE];
-    buf[BUF_SIZE-1] = '\0';  
-    int k = 0;
-
-    for(int i = k; i < size_num; i++){
-        fread(buf, k, i - k, _infile);
-        if(buf[i-1] == '\n' || buf[i-1] == '\0' || buf[i-1] == 0){
-            k = i;
-            fprintf(stdout,"%s",buf);
-            memset(buf, 0, BUF_SIZE);
+    char _ch;
+    int c;
+    //int k = 0, i;
+    memset(str, NULL, size_num);
+    //str = "\0';
+    for(int i = 0; i < size_num; i++){
+      if(c != EOF){
+        c = getc(_infile);
+        str[i] = c;
+        if(c == '\n'){
+          str[i] = c;
+            return str;
         }
-        //if(fread(buf, k, i - k, _infile) == 0){break;}
+      }else{
+        rewind(_infile);
+        break;
+      }
     }
+    return 0;
 }
 
 int main(int argc, char** argv){
@@ -34,17 +36,18 @@ int main(int argc, char** argv){
   }
 
   FILE* infile = fopen(argv[1], "r");
-  char *str[128];
-
-  my_fgets(*str, 127, infile);
+  char str[BUF_SIZE];
   
-//   char buf[BUF_SIZE];
-//   buf[BUF_SIZE-1] = '\0';  
- 
-//   while ( fread(buf, 1, sizeof(buf)-1, infile) !=0 ){
-//   	fprintf(stdout,"%s",buf);
-// 	memset(buf, 0, BUF_SIZE);
-//   }
+  while(my_fgets(str, BUF_SIZE-1, infile)){
+    printf("%s", str);
+  }
 
+  // memset(str, 0, sizeof(str)/sizeof(char));
+
+  // while(my_fgets(str, BUF_SIZE-1, infile)){
+  //   printf("%s", str);
+  // }
+
+  
   return(0);
 }
