@@ -6,22 +6,29 @@
 
 #define BUF_SIZE 1280
 
+int cc = 0;
+
 char *my_fgets(char *str, int size_num, FILE *_infile){
 
     char _ch;
     int c;
-    //int k = 0, i;
     memset(str, NULL, size_num);
-    //str = "\0';
     for(int i = 0; i < size_num; i++){
       if(c != EOF){
         c = getc(_infile);
         str[i] = c;
+        if(str[i] == '\xff'){
+          str[i] = '\r\n';
+           return 1;
+        }
         if(c == '\n'){
-          str[i] = c;
             return str;
         }
       }else{
+        if(str[i] == '\xff'){
+          str[i] = '\r\n';
+          return 1;
+        }
         rewind(_infile);
         break;
       }
@@ -37,8 +44,9 @@ int main(int argc, char** argv){
 
   FILE* infile = fopen(argv[1], "r");
   char str[BUF_SIZE];
+  str[BUF_SIZE-1] = '\0';
   
-  while(my_fgets(str, BUF_SIZE-1, infile)){
+    while(my_fgets(str, BUF_SIZE-1, infile)){
     printf("%s", str);
   }
 
