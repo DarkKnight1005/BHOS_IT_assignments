@@ -9,7 +9,7 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${fileDirname}/${fileBasenameNoExtension}",
-            "args": ["/Users/ayazpanahov/Desktop/BHOS/BHOS_IT_assignments/Week11/task2/textFile.txt"],
+            "args": ["/Users/ayazpanahov/Desktop/BHOS/BHOS_IT_assignments/Week12/settings.ini"],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}",
             "environment": [],
