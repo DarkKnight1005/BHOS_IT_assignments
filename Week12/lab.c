@@ -5,9 +5,9 @@
 #define BUF_SIZE 10000
 #define BRED -1
 
-size_t str_len (const char *str)
+int my_strlen (const char *str)
 {
-    size_t len;
+    int len;
     for (len = 0 ;; len++){
         if (str[len] == 0){ 
             return len;
@@ -93,14 +93,14 @@ int main(int argc, char** argv){
         if(my_strcmp(str, "!quit", arr[0]) == 0){
             return 0;
         }
-        if(str_len(str) != arr[0]){
+        if(my_strlen(str) != arr[0]){
             printf("Wrong number of characters, try again. \n");
             i --;
         }else{
             if(my_strcmp(str, password, arr[0]) == 0){
                 printf("correct, here's how you did: \n");
                 printf("%s \n", str);
-                for(int j = 0; j < str_len(str); j++){
+                for(int j = 0; j < my_strlen(str); j++){
                     printf("+");
                 }
                 printf("\n");
@@ -109,7 +109,7 @@ int main(int argc, char** argv){
             }else{
                 printf("incorrect, here's how you did: \n");
                 printf("%s \n", str);
-                for(int k = 0; k < str_len(str); k++){
+                for(int k = 0; k < my_strlen(str); k++){
                     if(str[k] == password[k]){
                         printf("+");
                     }else if(my_strchr(password, str[k], arr[0]) != NULL){
