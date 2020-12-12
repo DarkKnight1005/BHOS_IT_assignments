@@ -1,10 +1,37 @@
 #include<stdlib.h>
 #include<stdio.h>
-#include<string.h>
 #include<stdbool.h>
 
 #define BUF_SIZE 10000
 #define BRED -1
+
+size_t str_len (const char *str)
+{
+    size_t len;
+    for (len = 0 ;; len++){
+        if (str[len] == 0){ 
+            return len;
+        }
+    }
+}
+
+int my_strcmp(char *str1, char *str2, int size){
+    for(int i = 0; i < size; i++){
+        if(str1[i] != str2[i]){
+            return BRED;
+        }
+    }
+    return 0;
+}
+
+int my_strchr(char *str1, char character, int size){
+    for(int i = 0; i < size; i++){
+        if(str1[i] == character){
+            return i;
+        }
+    }
+    return NULL;
+}
 
 int main(int argc, char** argv){
     if (argc < 2 ){
@@ -19,10 +46,10 @@ int main(int argc, char** argv){
     bool isNumStart = false, isFisrtNumber = true;
     int st = 0, ed = 0, high_it = 0, sub_it = 0, j = 0, k = 0, i = 0, tries;
     int outInt;
-    
     fgets(str, BUF_SIZE - 1, infile);
     sub_it = 0;
-    for(k = 0; k < strlen(str); k++){
+    int strLen = sizeof(str)/sizeof(char) + 1;
+    for(k = 0; k < strLen; k++){
         if((str[k] >= 48 && str[k] <= 57) && !isNumStart){
             isNumStart = true;
             st = k;
@@ -35,7 +62,7 @@ int main(int argc, char** argv){
                 isFisrtNumber = false;
             }
         }
-        if((!(str[k] >= 48 && str[k] <= 57) && isNumStart) || k == strlen(str) - 1){
+        if((!(str[k] >= 48 && str[k] <= 57) && isNumStart) || k == strLen - 1){
             ed = k;
             j = 0;
             for(int i = st; i <= ed; i++){
@@ -48,31 +75,32 @@ int main(int argc, char** argv){
             st = 0;
             ed = 0;
             //free(substr);
-            memset(substr, NULL, sizeof(substr)/sizeof(char));
+            free(substr);
+            *substr = (char*)malloc(sizeof(char)*BUF_SIZE);
+            //memset(substr, NULL, sizeof(substr)/sizeof(char));
             isNumStart = false;
         }
     }
     free(substr);
-    memset(str, NULL, sizeof(str)/sizeof(char));
-
+    free(str);
+    *str = (char*)malloc(sizeof(char)*BUF_SIZE);
     printf("Welcome to Fallout 3 hacking minigame! \nThe passphrase contains %d letters. \n \n", arr[0]);
-
     for(int i = 0; i < arr[1]; i++){
         tries = arr[1] - i;
         printf("you have %d tries left: ", tries);
         scanf("%s", str);
         //printf("\n");
-        if(strcmp(str, "!quit") == 0){
+        if(my_strcmp(str, "!quit", arr[0]) == 0){
             return 0;
         }
-        if(strlen(str) != arr[0]){
+        if(str_len(str) != arr[0]){
             printf("Wrong number of characters, try again. \n");
             i --;
         }else{
-            if(strcmp(str, password) == 0){
+            if(my_strcmp(str, password, arr[0]) == 0){
                 printf("correct, here's how you did: \n");
                 printf("%s \n", str);
-                for(int j = 0; j < strlen(str); j++){
+                for(int j = 0; j < str_len(str); j++){
                     printf("+");
                 }
                 printf("\n");
@@ -81,10 +109,10 @@ int main(int argc, char** argv){
             }else{
                 printf("incorrect, here's how you did: \n");
                 printf("%s \n", str);
-                for(int k = 0; k < strlen(str); k++){
+                for(int k = 0; k < str_len(str); k++){
                     if(str[k] == password[k]){
                         printf("+");
-                    }else if(strchr(password, str[k]) != NULL){
+                    }else if(my_strchr(password, str[k], arr[0]) != NULL){
                         printf("!");
                     }else{
                         printf(".");
