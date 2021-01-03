@@ -61,10 +61,11 @@ void deleteNode(Node_t **head_ref, char *key)
     Node_t *prev;
 
     if (temp != NULL && strcmp(temp->data, key) == 0) { 
-        *head_ref = temp->next;  
+        *head_ref = temp->next; 
         free(temp);              
         return; 
     } 
+
     while (temp != NULL && strcmp(temp->data, key) != 0) { 
         prev = temp; 
         temp = temp->next; 
@@ -77,7 +78,6 @@ void deleteNode(Node_t **head_ref, char *key)
     prev->next = temp->next; 
     free(temp); 
 } 
-  
 
 int main() {
 
